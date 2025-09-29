@@ -558,14 +558,19 @@
                     <!-- CRM Submodules Navigation -->
                     <div style="margin-bottom: 2rem;">
                         <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                            <button class="btn" onclick="showCRMSubmodule('customers')">👥 Customers</button>
-                            <button class="btn" onclick="showCRMSubmodule('leads')">🎯 Leads</button>
-                            <button class="btn" onclick="showCRMSubmodule('opportunities')">💼 Opportunities</button>
                             <button class="btn" onclick="showCRMSubmodule('contacts')">📞 Contacts</button>
                             <button class="btn" onclick="showCRMSubmodule('accounts')">🏢 Accounts</button>
+                            <button class="btn" onclick="showCRMSubmodule('leads')">🎯 Leads</button>
+                            <button class="btn" onclick="showCRMSubmodule('opportunities')">💼 Opportunities</button>
                             <button class="btn" onclick="showCRMSubmodule('pipeline')">📊 Sales Pipeline</button>
                             <button class="btn" onclick="showCRMSubmodule('activities')">📅 Activities</button>
                             <button class="btn" onclick="showCRMSubmodule('analytics')">📈 Analytics</button>
+                            <button class="btn" onclick="showCRMSubmodule('settings')">⚙️ Settings</button>
+                        </div>
+                        <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                            <button class="btn" onclick="importData('crm')" style="background: #27ae60;">📥 Import</button>
+                            <button class="btn" onclick="exportData('crm')" style="background: #3498db;">📤 Export</button>
+                            <button class="btn" onclick="openFullPage('crm')" style="background: #9b59b6;">🔍 Full Page</button>
                         </div>
                     </div>
 
@@ -608,69 +613,123 @@
                         </div>
                     </div>
 
-                    <!-- Customers Submodule -->
-                    <div id="crm-customers" class="crm-submodule" style="display: none;">
-                        <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Customer Management</h2>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h3>All Customers</h3>
-                            <button class="btn" onclick="openModal('customerModal')">+ Add Customer</button>
+                    <!-- Contacts Submodule -->
+                    <div id="crm-contacts" class="crm-submodule" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                            <h2 style="margin: 0; color: #2c3e50;">📞 Contact Management</h2>
+                            <div style="display: flex; gap: 1rem;">
+                                <button class="btn" onclick="openContactModal()" style="background: #27ae60;">+ Add Contact</button>
+                                <button class="btn" onclick="bulkImportContacts()" style="background: #f39c12;">📥 Bulk Import</button>
+                            </div>
                         </div>
                         
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Customer Code</th>
-                                    <th>Name</th>
-                                    <th>Company</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Status</th>
-                                    <th>Health Score</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>CUST-001</td>
-                                    <td>John Smith</td>
-                                    <td>TechCorp Inc.</td>
-                                    <td>john@techcorp.com</td>
-                                    <td>+1-555-0123</td>
-                                    <td><span class="status-badge status-active">Active</span></td>
-                                    <td>85%</td>
-                                    <td>
-                                        <button class="btn" onclick="editCustomer(1)">Edit</button>
-                                        <button class="btn btn-secondary" onclick="viewCustomer(1)">View</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>CUST-002</td>
-                                    <td>Sarah Johnson</td>
-                                    <td>Innovate Ltd.</td>
-                                    <td>sarah@innovate.com</td>
-                                    <td>+1-555-0124</td>
-                                    <td><span class="status-badge status-pending">Pending</span></td>
-                                    <td>72%</td>
-                                    <td>
-                                        <button class="btn" onclick="editCustomer(2)">Edit</button>
-                                        <button class="btn btn-secondary" onclick="viewCustomer(2)">View</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>CUST-003</td>
-                                    <td>Mike Wilson</td>
-                                    <td>Global Solutions</td>
-                                    <td>mike@global.com</td>
-                                    <td>+1-555-0125</td>
-                                    <td><span class="status-badge status-active">Active</span></td>
-                                    <td>91%</td>
-                                    <td>
-                                        <button class="btn" onclick="editCustomer(3)">Edit</button>
-                                        <button class="btn btn-secondary" onclick="viewCustomer(3)">View</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <!-- Search and Filter Bar -->
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: center;">
+                            <input type="text" placeholder="🔍 Search contacts..." style="flex: 1; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                            <select style="padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px;">
+                                <option>All Status</option>
+                                <option>Active</option>
+                                <option>Inactive</option>
+                                <option>Lead</option>
+                            </select>
+                            <select style="padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px;">
+                                <option>All Sources</option>
+                                <option>Website</option>
+                                <option>Referral</option>
+                                <option>Cold Call</option>
+                            </select>
+                        </div>
+                        
+                        <div style="background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden;">
+                            <table class="table" style="margin: 0;">
+                                <thead style="background: #f8f9fa;">
+                                    <tr>
+                                        <th style="padding: 1rem; font-weight: 600;">Contact</th>
+                                        <th style="padding: 1rem; font-weight: 600;">Company</th>
+                                        <th style="padding: 1rem; font-weight: 600;">Email</th>
+                                        <th style="padding: 1rem; font-weight: 600;">Phone</th>
+                                        <th style="padding: 1rem; font-weight: 600;">Source</th>
+                                        <th style="padding: 1rem; font-weight: 600;">Status</th>
+                                        <th style="padding: 1rem; font-weight: 600;">Last Contact</th>
+                                        <th style="padding: 1rem; font-weight: 600;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="cursor: pointer;" onclick="openContactDetails(1)">
+                                        <td style="padding: 1rem;">
+                                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                                <div style="width: 40px; height: 40px; background: #4A90E2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">JS</div>
+                                                <div>
+                                                    <div style="font-weight: 600;">John Smith</div>
+                                                    <div style="font-size: 0.8rem; color: #666;">Primary Contact</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="padding: 1rem;">TechCorp Inc.</td>
+                                        <td style="padding: 1rem;">john@techcorp.com</td>
+                                        <td style="padding: 1rem;">+1-555-0123</td>
+                                        <td style="padding: 1rem;">Website</td>
+                                        <td style="padding: 1rem;"><span class="status-badge status-active">Active</span></td>
+                                        <td style="padding: 1rem;">2 days ago</td>
+                                        <td style="padding: 1rem;">
+                                            <div style="display: flex; gap: 0.5rem;">
+                                                <button class="btn" onclick="editContact(1)" style="padding: 0.5rem; font-size: 0.8rem;">✏️</button>
+                                                <button class="btn btn-secondary" onclick="viewContact(1)" style="padding: 0.5rem; font-size: 0.8rem;">👁️</button>
+                                                <button class="btn" onclick="deleteContact(1)" style="padding: 0.5rem; font-size: 0.8rem; background: #e74c3c;">🗑️</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" onclick="openContactDetails(2)">
+                                        <td style="padding: 1rem;">
+                                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                                <div style="width: 40px; height: 40px; background: #50E3C2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">SJ</div>
+                                                <div>
+                                                    <div style="font-weight: 600;">Sarah Johnson</div>
+                                                    <div style="font-size: 0.8rem; color: #666;">Decision Maker</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="padding: 1rem;">Innovate Ltd.</td>
+                                        <td style="padding: 1rem;">sarah@innovate.com</td>
+                                        <td style="padding: 1rem;">+1-555-0124</td>
+                                        <td style="padding: 1rem;">Referral</td>
+                                        <td style="padding: 1rem;"><span class="status-badge status-pending">Lead</span></td>
+                                        <td style="padding: 1rem;">1 week ago</td>
+                                        <td style="padding: 1rem;">
+                                            <div style="display: flex; gap: 0.5rem;">
+                                                <button class="btn" onclick="editContact(2)" style="padding: 0.5rem; font-size: 0.8rem;">✏️</button>
+                                                <button class="btn btn-secondary" onclick="viewContact(2)" style="padding: 0.5rem; font-size: 0.8rem;">👁️</button>
+                                                <button class="btn" onclick="deleteContact(2)" style="padding: 0.5rem; font-size: 0.8rem; background: #e74c3c;">🗑️</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" onclick="openContactDetails(3)">
+                                        <td style="padding: 1rem;">
+                                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                                <div style="width: 40px; height: 40px; background: #E95E5E; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">MW</div>
+                                                <div>
+                                                    <div style="font-weight: 600;">Mike Wilson</div>
+                                                    <div style="font-size: 0.8rem; color: #666;">Technical Lead</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="padding: 1rem;">Global Solutions</td>
+                                        <td style="padding: 1rem;">mike@global.com</td>
+                                        <td style="padding: 1rem;">+1-555-0125</td>
+                                        <td style="padding: 1rem;">Cold Call</td>
+                                        <td style="padding: 1rem;"><span class="status-badge status-active">Active</span></td>
+                                        <td style="padding: 1rem;">3 days ago</td>
+                                        <td style="padding: 1rem;">
+                                            <div style="display: flex; gap: 0.5rem;">
+                                                <button class="btn" onclick="editContact(3)" style="padding: 0.5rem; font-size: 0.8rem;">✏️</button>
+                                                <button class="btn btn-secondary" onclick="viewContact(3)" style="padding: 0.5rem; font-size: 0.8rem;">👁️</button>
+                                                <button class="btn" onclick="deleteContact(3)" style="padding: 0.5rem; font-size: 0.8rem; background: #e74c3c;">🗑️</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <!-- Leads Submodule -->
@@ -1345,6 +1404,113 @@
         <span id="notification-text">Welcome to Clean ERP System!</span>
     </div>
 
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add/Edit Contact</h3>
+                <button class="close-btn" onclick="hideModal('contactModal')">&times;</button>
+            </div>
+            <form style="display: flex; flex-direction: column; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input type="text" class="form-input" placeholder="Enter first name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" class="form-input" placeholder="Enter last name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="Enter email address">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input type="tel" class="form-input" placeholder="Enter phone number">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Company</label>
+                    <input type="text" class="form-input" placeholder="Enter company name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Source</label>
+                    <select class="form-input">
+                        <option>Website</option>
+                        <option>Referral</option>
+                        <option>Cold Call</option>
+                        <option>Social Media</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="form-input">
+                        <option>Lead</option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1rem;">
+                    <button type="button" class="btn btn-secondary" onclick="hideModal('contactModal')">Cancel</button>
+                    <button type="submit" class="btn" onclick="hideModal('contactModal'); showNotification('Contact saved successfully!')">Save Contact</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contact Details Modal -->
+    <div class="modal" id="contactDetailsModal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Contact Details</h3>
+                <button class="close-btn" onclick="hideModal('contactDetailsModal')">&times;</button>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h4 style="margin-bottom: 1rem; color: #2c3e50;">Contact Information</h4>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="width: 60px; height: 60px; background: #4A90E2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.5rem;">JS</div>
+                        <div>
+                            <h3 style="margin: 0;">John Smith</h3>
+                            <p style="margin: 0; color: #666;">Primary Contact</p>
+                        </div>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                        <p><strong>Email:</strong> john@techcorp.com</p>
+                        <p><strong>Phone:</strong> +1-555-0123</p>
+                        <p><strong>Company:</strong> TechCorp Inc.</p>
+                        <p><strong>Source:</strong> Website</p>
+                        <p><strong>Status:</strong> <span class="status-badge status-active">Active</span></p>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 1rem; color: #2c3e50;">Recent Activities</h4>
+                    <div style="max-height: 300px; overflow-y: auto;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                            <div style="width: 40px; height: 40px; background: #27ae60; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">📞</div>
+                            <div>
+                                <div style="font-weight: 600;">Phone Call</div>
+                                <div style="font-size: 0.8rem; color: #666;">2 days ago</div>
+                                <div style="font-size: 0.9rem;">Discussed project requirements</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                            <div style="width: 40px; height: 40px; background: #3498db; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">📧</div>
+                            <div>
+                                <div style="font-weight: 600;">Email Sent</div>
+                                <div style="font-size: 0.8rem; color: #666;">1 week ago</div>
+                                <div style="font-size: 0.9rem;">Sent proposal document</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                <button class="btn btn-secondary" onclick="hideModal('contactDetailsModal')">Close</button>
+                <button class="btn" onclick="editContact(1); hideModal('contactDetailsModal')">Edit Contact</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Show notification
         function showNotification(message) {
@@ -1565,6 +1731,65 @@
 
         function viewPosition(id) {
             showNotification(`Viewing Position #${id}`);
+        }
+
+        // Enhanced CRM Functions
+        function openContactModal() {
+            showModal('contactModal');
+        }
+
+        function openContactDetails(id) {
+            showModal('contactDetailsModal');
+            showNotification(`Opening Contact #${id} Details`);
+        }
+
+        function editContact(id) {
+            showModal('contactModal');
+            showNotification(`Editing Contact #${id}`);
+        }
+
+        function viewContact(id) {
+            showModal('contactDetailsModal');
+            showNotification(`Viewing Contact #${id}`);
+        }
+
+        function deleteContact(id) {
+            if (confirm('Are you sure you want to delete this contact?')) {
+                showNotification(`Contact #${id} deleted successfully`);
+            }
+        }
+
+        function bulkImportContacts() {
+            showNotification('Opening bulk import dialog...');
+            // Here you would open file upload dialog
+        }
+
+        function importData(module) {
+            showNotification(`Importing data for ${module} module...`);
+        }
+
+        function exportData(module) {
+            showNotification(`Exporting data for ${module} module...`);
+        }
+
+        function openFullPage(module) {
+            showNotification(`Opening ${module} in full page view...`);
+            // Here you would open a new window or full screen mode
+        }
+
+        // Modal Functions
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+            }
+        }
+
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+            }
         }
 
         // Initialize

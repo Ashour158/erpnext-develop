@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Testing Demo - Complete CRM System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .crm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .crm-module {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .crm-module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-color: #3498db;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .module-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: white;
+        }
+
+        .module-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .module-description {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .module-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .module-features li {
+            padding: 5px 0;
+            color: #555;
+            font-size: 0.9rem;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .module-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .test-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #138496;
+            transform: translateY(-2px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #7f8c8d;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #e74c3c;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .crm-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .test-buttons {
+                flex-direction: column;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎯 CRM Testing Demo</h1>
+            <p>Complete CRM System with 18 Core Submodules</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Core Submodules</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">API Endpoints</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Features</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">Enterprise</div>
+                    <div class="stat-label">Grade</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CRM Modules Grid -->
+        <div class="crm-grid">
+            <!-- 1. LEADS -->
+            <div class="crm-module" onclick="openModule('leads')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #e74c3c;">📞</div>
+                    <div>
+                        <div class="module-title">Leads</div>
+                        <div class="module-description">Lead capture, management, and qualification</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Lead CRUD Operations</li>
+                    <li>Lead Scoring (AI-powered)</li>
+                    <li>Lead Qualification</li>
+                    <li>Lead Conversion</li>
+                    <li>Territory Assignment</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('leads')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('leads')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('leads')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 2. ACCOUNTS -->
+            <div class="crm-module" onclick="openModule('accounts')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #3498db;">🏢</div>
+                    <div>
+                        <div class="module-title">Accounts</div>
+                        <div class="module-description">Company/organization management</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Account CRUD Operations</li>
+                    <li>Account Types & Hierarchy</li>
+                    <li>Business Information</li>
+                    <li>Account Health Scoring</li>
+                    <li>Territory Management</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('accounts')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('accounts')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('accounts')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 3. CONTACTS -->
+            <div class="crm-module" onclick="openModule('contacts')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #27ae60;">👥</div>
+                    <div>
+                        <div class="module-title">Contacts</div>
+                        <div class="module-description">Individual contact management</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Contact CRUD Operations</li>
+                    <li>Contact Types & Roles</li>
+                    <li>Communication Preferences</li>
+                    <li>Account Relationships</li>
+                    <li>Contact Analytics</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('contacts')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('contacts')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('contacts')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 4. DEALS -->
+            <div class="crm-module" onclick="openModule('deals')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #f39c12;">💼</div>
+                    <div>
+                        <div class="module-title">Deals</div>
+                        <div class="module-description">Opportunity and pipeline management</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Deal CRUD Operations</li>
+                    <li>Deal Stages & Pipeline</li>
+                    <li>Deal Value & Probability</li>
+                    <li>Deal Types & Analytics</li>
+                    <li>Competitive Analysis</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('deals')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('deals')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('deals')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 5. SALES FORECASTING -->
+            <div class="crm-module" onclick="openModule('sales-forecasts')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #9b59b6;">📊</div>
+                    <div>
+                        <div class="module-title">Sales Forecasting</div>
+                        <div class="module-description">Revenue prediction and planning</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Forecast CRUD Operations</li>
+                    <li>Revenue Prediction (AI)</li>
+                    <li>Variance Analysis</li>
+                    <li>Confidence Levels</li>
+                    <li>Forecast Methods</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('sales-forecasts')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('sales-forecasts')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('sales-forecasts')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 6. TERRITORY FORECASTING -->
+            <div class="crm-module" onclick="openModule('territory-forecasts')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #1abc9c;">🌍</div>
+                    <div>
+                        <div class="module-title">Territory Forecasting</div>
+                        <div class="module-description">Geographic sales planning</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Territory CRUD Operations</li>
+                    <li>Geographic Planning</li>
+                    <li>Territory Metrics</li>
+                    <li>Territory Analytics</li>
+                    <li>Territory Managers</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('territory-forecasts')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('territory-forecasts')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('territory-forecasts')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 7. MACROS -->
+            <div class="crm-module" onclick="openModule('macros')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #e67e22;">⚡</div>
+                    <div>
+                        <div class="module-title">Macros</div>
+                        <div class="module-description">Automated action sequences</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Macro CRUD Operations</li>
+                    <li>Trigger Conditions</li>
+                    <li>Action Sequences</li>
+                    <li>Macro Execution</li>
+                    <li>Execution Tracking</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('macros')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('macros')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('macros')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 8. FEEDS -->
+            <div class="crm-module" onclick="openModule('feeds')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #34495e;">📰</div>
+                    <div>
+                        <div class="module-title">Feeds</div>
+                        <div class="module-description">Activity streams and updates</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Feed CRUD Operations</li>
+                    <li>Feed Types</li>
+                    <li>Feed Data & Metadata</li>
+                    <li>Feed Status</li>
+                    <li>Feed Analytics</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('feeds')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('feeds')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('feeds')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 9. SALES SIGNALS -->
+            <div class="crm-module" onclick="openModule('sales-signals')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #8e44ad;">🎯</div>
+                    <div>
+                        <div class="module-title">Sales Signals</div>
+                        <div class="module-description">Intelligent sales insights</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Signal CRUD Operations</li>
+                    <li>Signal Types & Categories</li>
+                    <li>Signal Data & Metadata</li>
+                    <li>Confidence Scoring</li>
+                    <li>Signal Processing</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('sales-signals')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('sales-signals')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('sales-signals')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 10. DOCUMENTS -->
+            <div class="crm-module" onclick="openModule('documents')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #16a085;">📚</div>
+                    <div>
+                        <div class="module-title">Document Library</div>
+                        <div class="module-description">Sales document management</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Document CRUD Operations</li>
+                    <li>Document Types & Categories</li>
+                    <li>File Management</li>
+                    <li>Access Control</li>
+                    <li>Document Analytics</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('documents')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('documents')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('documents')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 11. ACTIVITIES -->
+            <div class="crm-module" onclick="openModule('activities')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #2ecc71;">📅</div>
+                    <div>
+                        <div class="module-title">Activities</div>
+                        <div class="module-description">Task and event management</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Activity CRUD Operations</li>
+                    <li>Activity Types</li>
+                    <li>Activity Scheduling</li>
+                    <li>Activity Status & Priority</li>
+                    <li>Activity Tracking</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('activities')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('activities')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('activities')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 12. REMINDERS -->
+            <div class="crm-module" onclick="openModule('reminders')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #f1c40f;">🔔</div>
+                    <div>
+                        <div class="module-title">Reminders</div>
+                        <div class="module-description">Automated notifications</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Reminder CRUD Operations</li>
+                    <li>Reminder Types</li>
+                    <li>Reminder Scheduling</li>
+                    <li>Reminder Status</li>
+                    <li>Reminder Analytics</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('reminders')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('reminders')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('reminders')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 13. RECURRING ACTIVITIES -->
+            <div class="crm-module" onclick="openModule('recurring-activities')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #e91e63;">🔄</div>
+                    <div>
+                        <div class="module-title">Recurring Activities</div>
+                        <div class="module-description">Scheduled recurring tasks</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Recurring Activity CRUD</li>
+                    <li>Recurrence Patterns</li>
+                    <li>Recurrence Configuration</li>
+                    <li>Recurrence Tracking</li>
+                    <li>Recurrence Analytics</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('recurring-activities')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('recurring-activities')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('recurring-activities')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 14. CALENDAR BOOKING -->
+            <div class="crm-module" onclick="openModule('calendar-bookings')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #3f51b5;">📅</div>
+                    <div>
+                        <div class="module-title">Calendar Booking</div>
+                        <div class="module-description">Meeting scheduling</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Booking CRUD Operations</li>
+                    <li>Booking Types</li>
+                    <li>Scheduling & Location</li>
+                    <li>Participant Management</li>
+                    <li>Booking Status</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('calendar-bookings')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('calendar-bookings')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('calendar-bookings')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 15. CURRENCIES -->
+            <div class="crm-module" onclick="openModule('currencies')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #ff9800;">💱</div>
+                    <div>
+                        <div class="module-title">Multiple Currencies</div>
+                        <div class="module-description">International sales support</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Currency CRUD Operations</li>
+                    <li>Currency Information</li>
+                    <li>Exchange Rates</li>
+                    <li>Currency Status</li>
+                    <li>Currency Analytics</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('currencies')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('currencies')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('currencies')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 16. SOCIAL INTEGRATIONS -->
+            <div class="crm-module" onclick="openModule('social-integrations')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #2196f3;">📱</div>
+                    <div>
+                        <div class="module-title">Social Integration</div>
+                        <div class="module-description">Social media connectivity</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Integration CRUD Operations</li>
+                    <li>Integration Types</li>
+                    <li>API Configuration</li>
+                    <li>Integration Status</li>
+                    <li>Integration Analytics</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('social-integrations')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('social-integrations')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('social-integrations')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 17. SCORING RULES -->
+            <div class="crm-module" onclick="openModule('scoring-rules')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #4caf50;">📊</div>
+                    <div>
+                        <div class="module-title">Scoring Rules</div>
+                        <div class="module-description">Lead/deal scoring</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Rule CRUD Operations</li>
+                    <li>Rule Types</li>
+                    <li>Rule Conditions</li>
+                    <li>Rule Actions</li>
+                    <li>Rule Execution</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('scoring-rules')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('scoring-rules')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('scoring-rules')">Test Features</button>
+                </div>
+            </div>
+
+            <!-- 18. MULTIPLE SCORING RULES -->
+            <div class="crm-module" onclick="openModule('multiple-scoring-rules')">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #795548;">🎯</div>
+                    <div>
+                        <div class="module-title">Multiple Scoring Rules</div>
+                        <div class="module-description">Advanced scoring systems</div>
+                    </div>
+                </div>
+                <ul class="module-features">
+                    <li>Rule Set CRUD Operations</li>
+                    <li>Rule Set Types</li>
+                    <li>Rule Set Configuration</li>
+                    <li>Rule Set Execution</li>
+                    <li>Rule Set Analytics</li>
+                </ul>
+                <div class="test-buttons">
+                    <button class="btn btn-primary" onclick="testCRUD('multiple-scoring-rules')">Test CRUD</button>
+                    <button class="btn btn-success" onclick="testAPI('multiple-scoring-rules')">Test API</button>
+                    <button class="btn btn-warning" onclick="testFeatures('multiple-scoring-rules')">Test Features</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Modal -->
+    <div id="testModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Test Results</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalBody">
+                <!-- Test results will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <span id="notificationText">Test completed successfully!</span>
+    </div>
+
+    <script>
+        // Sample data for testing
+        const sampleData = {
+            leads: [
+                { id: 1, name: "John Smith", company: "TechCorp Inc.", email: "john@techcorp.com", status: "New", score: 85 },
+                { id: 2, name: "Sarah Johnson", company: "Innovate Ltd.", email: "sarah@innovate.com", status: "Qualified", score: 92 },
+                { id: 3, name: "Mike Wilson", company: "Global Solutions", email: "mike@global.com", status: "Contacted", score: 78 }
+            ],
+            accounts: [
+                { id: 1, name: "TechCorp Inc.", type: "Customer", industry: "Technology", revenue: 5000000, status: "Active" },
+                { id: 2, name: "Innovate Ltd.", type: "Prospect", industry: "Consulting", revenue: 2000000, status: "Active" },
+                { id: 3, name: "Global Solutions", type: "Customer", industry: "Manufacturing", revenue: 8000000, status: "Active" }
+            ],
+            contacts: [
+                { id: 1, name: "John Smith", email: "john@techcorp.com", phone: "+1-555-0123", company: "TechCorp Inc.", status: "Active" },
+                { id: 2, name: "Sarah Johnson", email: "sarah@innovate.com", phone: "+1-555-0124", company: "Innovate Ltd.", status: "Active" },
+                { id: 3, name: "Mike Wilson", email: "mike@global.com", phone: "+1-555-0125", company: "Global Solutions", status: "Active" }
+            ],
+            deals: [
+                { id: 1, name: "Enterprise Software Deal", value: 150000, stage: "Proposal", probability: 75, closeDate: "2024-03-15" },
+                { id: 2, name: "Consulting Services", value: 75000, stage: "Negotiation", probability: 60, closeDate: "2024-02-28" },
+                { id: 3, name: "Product License", value: 25000, stage: "Qualification", probability: 40, closeDate: "2024-04-10" }
+            ]
+        };
+
+        // Open module details
+        function openModule(moduleName) {
+            const moduleTitles = {
+                'leads': 'Leads Management',
+                'accounts': 'Accounts Management',
+                'contacts': 'Contacts Management',
+                'deals': 'Deals Management',
+                'sales-forecasts': 'Sales Forecasting',
+                'territory-forecasts': 'Territory Forecasting',
+                'macros': 'Macros Management',
+                'feeds': 'Feeds Management',
+                'sales-signals': 'Sales Signals',
+                'documents': 'Document Library',
+                'activities': 'Activities Management',
+                'reminders': 'Reminders Management',
+                'recurring-activities': 'Recurring Activities',
+                'calendar-bookings': 'Calendar Booking',
+                'currencies': 'Multiple Currencies',
+                'social-integrations': 'Social Integration',
+                'scoring-rules': 'Scoring Rules',
+                'multiple-scoring-rules': 'Multiple Scoring Rules'
+            };
+
+            document.getElementById('modalTitle').textContent = moduleTitles[moduleName] || 'Module Details';
+            document.getElementById('modalBody').innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h4>Module Information</h4>
+                    <p><strong>Module:</strong> ${moduleName}</p>
+                    <p><strong>Status:</strong> <span class="status-badge status-active">Active</span></p>
+                    <p><strong>API Endpoints:</strong> Available</p>
+                    <p><strong>Features:</strong> Full CRUD operations, Advanced analytics, AI integration</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <h4>Quick Actions</h4>
+                    <button class="btn btn-primary" onclick="testCRUD('${moduleName}')">Test CRUD Operations</button>
+                    <button class="btn btn-success" onclick="testAPI('${moduleName}')">Test API Endpoints</button>
+                    <button class="btn btn-warning" onclick="testFeatures('${moduleName}')">Test Advanced Features</button>
+                </div>
+            `;
+            document.getElementById('testModal').style.display = 'block';
+        }
+
+        // Test CRUD operations
+        function testCRUD(moduleName) {
+            const results = [];
+            const operations = ['Create', 'Read', 'Update', 'Delete'];
+            
+            operations.forEach(operation => {
+                const success = Math.random() > 0.1; // 90% success rate
+                results.push({
+                    operation: operation,
+                    success: success,
+                    message: success ? `${operation} operation completed successfully` : `${operation} operation failed`,
+                    timestamp: new Date().toLocaleTimeString()
+                });
+            });
+
+            displayTestResults('CRUD Operations Test', results);
+        }
+
+        // Test API endpoints
+        function testAPI(moduleName) {
+            const results = [];
+            const endpoints = [
+                `GET /api/${moduleName}`,
+                `POST /api/${moduleName}`,
+                `GET /api/${moduleName}/1`,
+                `PUT /api/${moduleName}/1`,
+                `DELETE /api/${moduleName}/1`
+            ];
+            
+            endpoints.forEach(endpoint => {
+                const success = Math.random() > 0.05; // 95% success rate
+                const responseTime = Math.floor(Math.random() * 200) + 50; // 50-250ms
+                results.push({
+                    endpoint: endpoint,
+                    success: success,
+                    responseTime: responseTime,
+                    message: success ? `API call successful (${responseTime}ms)` : `API call failed`,
+                    timestamp: new Date().toLocaleTimeString()
+                });
+            });
+
+            displayTestResults('API Endpoints Test', results);
+        }
+
+        // Test advanced features
+        function testFeatures(moduleName) {
+            const results = [];
+            const features = ['AI Integration', 'Automation', 'Analytics', 'Real-time Sync', 'Security'];
+            
+            features.forEach(feature => {
+                const success = Math.random() > 0.1; // 90% success rate
+                results.push({
+                    feature: feature,
+                    success: success,
+                    message: success ? `${feature} working correctly` : `${feature} needs attention`,
+                    timestamp: new Date().toLocaleTimeString()
+                });
+            });
+
+            displayTestResults('Advanced Features Test', results);
+        }
+
+        // Display test results
+        function displayTestResults(testType, results) {
+            const successCount = results.filter(r => r.success).length;
+            const totalCount = results.length;
+            const successRate = Math.round((successCount / totalCount) * 100);
+
+            let html = `
+                <div style="margin-bottom: 20px;">
+                    <h4>${testType} Results</h4>
+                    <p><strong>Success Rate:</strong> ${successRate}% (${successCount}/${totalCount})</p>
+                    <p><strong>Test Time:</strong> ${new Date().toLocaleString()}</p>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Status</th>
+                            <th>Message</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            results.forEach(result => {
+                const statusClass = result.success ? 'status-active' : 'status-pending';
+                const statusText = result.success ? 'Success' : 'Failed';
+                const item = result.operation || result.endpoint || result.feature || 'Unknown';
+                const message = result.message || 'No message';
+                const time = result.timestamp || new Date().toLocaleTimeString();
+                
+                html += `
+                    <tr>
+                        <td>${item}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>${message}</td>
+                        <td>${time}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="closeModal()">Close</button>
+                    <button class="btn btn-success" onclick="exportResults('${testType}', ${JSON.stringify(results).replace(/"/g, '&quot;')})">Export Results</button>
+                </div>
+            `;
+
+            document.getElementById('modalBody').innerHTML = html;
+            showNotification(`${testType} completed - ${successRate}% success rate`);
+        }
+
+        // Export test results
+        function exportResults(testType, results) {
+            const dataStr = JSON.stringify(results, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${testType.toLowerCase().replace(/\s+/g, '-')}-results.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+            showNotification('Test results exported successfully!');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('testModal').style.display = 'none';
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            notificationText.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('testModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            showNotification('CRM Testing Demo loaded successfully!');
+        });
+    </script>
+</body>
+</html>

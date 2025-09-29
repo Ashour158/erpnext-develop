@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean ERP System - Complete Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4A90E2 0%, #50E3C2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .main-content {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .sidebar-toggle {
+            background: #34495e;
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+            border-bottom: 1px solid #34495e;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #34495e;
+        }
+
+        .nav-item:hover {
+            background: #34495e;
+        }
+
+        .nav-item.active {
+            background: #4A90E2;
+        }
+
+        .nav-icon {
+            width: 20px;
+            margin-right: 1rem;
+        }
+
+        .nav-text {
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed .nav-text {
+            opacity: 0;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4A90E2;
+            margin: 1rem 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .btn {
+            background: #4A90E2;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #3A7BC8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .table {
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .table th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4A90E2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4A90E2;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .ai-features {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .ai-features h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-features p {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -250px;
+                z-index: 1000;
+                height: 100vh;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .content-area {
+                padding: 1rem;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🚀 Clean ERP System</div>
+            <div class="user-info">
+                <span>Welcome, Admin User</span>
+                <button class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Sidebar -->
+            <div class="sidebar" id="sidebar">
+                <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                
+                <div class="nav-item active" onclick="showPage('dashboard')">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </div>
+                
+                <div class="nav-item" onclick="showPage('crm')">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">CRM</span>
+                </div>
+                
+                <div class="nav-item" onclick="showPage('desk')">
+                    <span class="nav-icon">🎫</span>
+                    <span class="nav-text">Desk</span>
+                </div>
+                
+                <div class="nav-item" onclick="showPage('people')">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">People</span>
+                </div>
+                
+                <div class="nav-item" onclick="showPage('marketing')">
+                    <span class="nav-icon">📢</span>
+                    <span class="nav-text">Marketing</span>
+                </div>
+                
+                <div class="nav-item" onclick="showPage('synk')">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-text">Synk</span>
+                </div>
+                
+                <div class="nav-item" onclick="showPage('quality')">
+                    <span class="nav-icon">✅</span>
+                    <span class="nav-text">Quality</span>
+                </div>
+                
+                <div class="nav-item" onclick="showPage('projects')">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-text">Projects</span>
+                </div>
+                
+                <div class="nav-item" onclick="showPage('security')">
+                    <span class="nav-icon">🔒</span>
+                    <span class="nav-text">Security</span>
+                </div>
+                
+                <div class="nav-item" onclick="showPage('business-intelligence')">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Business Intelligence</span>
+                </div>
+                
+                <div class="nav-item" onclick="showPage('finance')">
+                    <span class="nav-icon">💰</span>
+                    <span class="nav-text">Finance</span>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Dashboard Page -->
+                <div class="page active" id="dashboard">
+                    <div class="page-header">
+                        <h1 class="page-title">Dashboard</h1>
+                        <p class="page-subtitle">Welcome to Clean ERP System - Complete overview of your business</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Total Customers</h3>
+                            </div>
+                            <div class="card-value">2,847</div>
+                            <p style="color: #27ae60;">↗ +12% from last month</p>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Active Projects</h3>
+                            </div>
+                            <div class="card-value">156</div>
+                            <p style="color: #e74c3c;">↘ -3% from last month</p>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Revenue</h3>
+                            </div>
+                            <div class="card-value">$847K</div>
+                            <p style="color: #27ae60;">↗ +18% from last month</p>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Support Tickets</h3>
+                            </div>
+                            <div class="card-value">23</div>
+                            <p style="color: #f39c12;">→ Same as last month</p>
+                        </div>
+                    </div>
+
+                    <div class="ai-features">
+                        <h3>🤖 AI-Powered Insights</h3>
+                        <p>Your AI assistant has identified 5 opportunities for revenue growth and 3 potential risks that need attention.</p>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Quick Actions</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card" onclick="showPage('crm')">
+                            <div class="feature-title">👥 CRM Management</div>
+                            <div class="feature-desc">Manage customers, leads, and opportunities with AI-powered insights</div>
+                        </div>
+                        <div class="feature-card" onclick="showPage('desk')">
+                            <div class="feature-title">🎫 Help Desk</div>
+                            <div class="feature-desc">Handle support tickets and maintenance requests efficiently</div>
+                        </div>
+                        <div class="feature-card" onclick="showPage('projects')">
+                            <div class="feature-title">📋 Project Management</div>
+                            <div class="feature-desc">Track projects, tasks, and team collaboration</div>
+                        </div>
+                        <div class="feature-card" onclick="showPage('finance')">
+                            <div class="feature-title">💰 Financial Management</div>
+                            <div class="feature-desc">Accounting, invoicing, and financial reporting</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CRM Page -->
+                <div class="page" id="crm">
+                    <div class="page-header">
+                        <h1 class="page-title">Customer Relationship Management</h1>
+                        <p class="page-subtitle">Manage customers, leads, and sales opportunities with AI-powered insights</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Total Leads</h3>
+                            </div>
+                            <div class="card-value">1,247</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Conversion Rate</h3>
+                            </div>
+                            <div class="card-value">23.4%</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Sales Pipeline</h3>
+                            </div>
+                            <div class="card-value">$2.1M</div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">CRM Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 AI Lead Scoring</div>
+                            <div class="feature-desc">Automatically score and prioritize leads using machine learning</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🎤 Voice Commands</div>
+                            <div class="feature-desc">Control CRM with voice commands for hands-free operation</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📱 Mobile CRM</div>
+                            <div class="feature-desc">Access CRM on mobile devices with offline capabilities</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📅 Calendar Integration</div>
+                            <div class="feature-desc">Sync with external calendars and schedule meetings</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📍 Geolocation Tracking</div>
+                            <div class="feature-desc">Track customer locations and territory management</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🔗 CRM Integrations</div>
+                            <div class="feature-desc">Connect with email, social media, and other platforms</div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Recent Customers</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Company</th>
+                                <th>Status</th>
+                                <th>Last Contact</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Smith</td>
+                                <td>TechCorp Inc.</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>2 days ago</td>
+                                <td><button class="btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>Sarah Johnson</td>
+                                <td>Innovate Ltd.</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>1 week ago</td>
+                                <td><button class="btn">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Desk Page -->
+                <div class="page" id="desk">
+                    <div class="page-header">
+                        <h1 class="page-title">Help Desk & Maintenance</h1>
+                        <p class="page-subtitle">Manage support tickets, maintenance requests, and field service operations</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Open Tickets</h3>
+                            </div>
+                            <div class="card-value">47</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Maintenance Requests</h3>
+                            </div>
+                            <div class="card-value">23</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">SLA Compliance</h3>
+                            </div>
+                            <div class="card-value">94.2%</div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Desk Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 AI Ticket Classification</div>
+                            <div class="feature-desc">Automatically categorize and prioritize support tickets</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🔧 AR Maintenance Guides</div>
+                            <div class="feature-desc">Step-by-step maintenance instructions with AR overlay</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📍 Field Service Tracking</div>
+                            <div class="feature-desc">Track field technicians and optimize routes</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🌐 IoT Device Management</div>
+                            <div class="feature-desc">Monitor and manage IoT devices remotely</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🎤 Voice Support</div>
+                            <div class="feature-desc">Voice-controlled support operations</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📱 Mobile Desk</div>
+                            <div class="feature-desc">Mobile-optimized support interface</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- People Page -->
+                <div class="page" id="people">
+                    <div class="page-header">
+                        <h1 class="page-title">People & HR Management</h1>
+                        <p class="page-subtitle">Manage employees, attendance, and human resources</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Total Employees</h3>
+                            </div>
+                            <div class="card-value">247</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Active Today</h3>
+                            </div>
+                            <div class="card-value">189</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Leave Requests</h3>
+                            </div>
+                            <div class="card-value">12</div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">HR Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 AI HR Analytics</div>
+                            <div class="feature-desc">Predict employee performance and retention</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📍 Geolocation Attendance</div>
+                            <div class="feature-desc">GPS-based attendance tracking</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📱 Mobile HR</div>
+                            <div class="feature-desc">Mobile access to HR functions</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🎤 Voice HR</div>
+                            <div class="feature-desc">Voice-controlled HR operations</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketing Page -->
+                <div class="page" id="marketing">
+                    <div class="page-header">
+                        <h1 class="page-title">Marketing Automation</h1>
+                        <p class="page-subtitle">Create and manage marketing campaigns with AI optimization</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Active Campaigns</h3>
+                            </div>
+                            <div class="card-value">15</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Email Open Rate</h3>
+                            </div>
+                            <div class="card-value">24.7%</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Lead Generation</h3>
+                            </div>
+                            <div class="card-value">342</div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Marketing Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 AI Campaign Optimization</div>
+                            <div class="feature-desc">Automatically optimize campaigns for better performance</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📧 Email Automation</div>
+                            <div class="feature-desc">Automated email sequences and workflows</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📱 Mobile Marketing</div>
+                            <div class="feature-desc">Mobile-optimized marketing campaigns</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🔗 Social Media Integration</div>
+                            <div class="feature-desc">Connect with social media platforms</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Synk Page -->
+                <div class="page" id="synk">
+                    <div class="page-header">
+                        <h1 class="page-title">Synk - Internal Communication</h1>
+                        <p class="page-subtitle">Real-time collaboration and communication platform</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Active Chats</h3>
+                            </div>
+                            <div class="card-value">23</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Online Users</h3>
+                            </div>
+                            <div class="card-value">89</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Messages Today</h3>
+                            </div>
+                            <div class="card-value">1,247</div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Synk Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">💬 Real-time Chat</div>
+                            <div class="feature-desc">Instant messaging with file sharing</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📞 VOIP Calling</div>
+                            <div class="feature-desc">Voice and video calls</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 AI Assistant</div>
+                            <div class="feature-desc">AI-powered collaboration assistant</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📝 Collaborative Editing</div>
+                            <div class="feature-desc">Real-time document collaboration</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🥽 VR Meetings</div>
+                            <div class="feature-desc">Virtual reality meeting rooms</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📱 Mobile Synk</div>
+                            <div class="feature-desc">Mobile communication platform</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quality Page -->
+                <div class="page" id="quality">
+                    <div class="page-header">
+                        <h1 class="page-title">Quality Management</h1>
+                        <p class="page-subtitle">Ensure quality standards and compliance</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Quality Checks</h3>
+                            </div>
+                            <div class="card-value">156</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Compliance Rate</h3>
+                            </div>
+                            <div class="card-value">98.7%</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Defects Found</h3>
+                            </div>
+                            <div class="card-value">3</div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Quality Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 AI Quality Prediction</div>
+                            <div class="feature-desc">Predict quality issues before they occur</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🥽 AR Quality Inspection</div>
+                            <div class="feature-desc">AR-guided quality inspections</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🌐 IoT Quality Monitoring</div>
+                            <div class="feature-desc">Real-time quality monitoring with IoT</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📱 Mobile Quality</div>
+                            <div class="feature-desc">Mobile quality management</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projects Page -->
+                <div class="page" id="projects">
+                    <div class="page-header">
+                        <h1 class="page-title">Project Management</h1>
+                        <p class="page-subtitle">Track projects, tasks, and team collaboration</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Active Projects</h3>
+                            </div>
+                            <div class="card-value">23</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Tasks Completed</h3>
+                            </div>
+                            <div class="card-value">1,247</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Team Members</h3>
+                            </div>
+                            <div class="card-value">89</div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Project Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 AI Project Optimization</div>
+                            <div class="feature-desc">AI-powered project planning and optimization</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📱 Mobile Project Management</div>
+                            <div class="feature-desc">Mobile access to project management</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🎤 Voice Project Commands</div>
+                            <div class="feature-desc">Voice-controlled project operations</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📅 Project Calendar</div>
+                            <div class="feature-desc">Integrated project scheduling</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Page -->
+                <div class="page" id="security">
+                    <div class="page-header">
+                        <h1 class="page-title">Security & Compliance</h1>
+                        <p class="page-subtitle">Manage security, compliance, and risk management</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Security Score</h3>
+                            </div>
+                            <div class="card-value">94.2</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Threats Blocked</h3>
+                            </div>
+                            <div class="card-value">1,247</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Compliance Rate</h3>
+                            </div>
+                            <div class="card-value">98.7%</div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Security Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 AI Threat Detection</div>
+                            <div class="feature-desc">AI-powered security threat detection</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🔒 Multi-Factor Authentication</div>
+                            <div class="feature-desc">Enhanced security with MFA</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📊 Compliance Monitoring</div>
+                            <div class="feature-desc">Automated compliance monitoring</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🔗 Blockchain Audit Trails</div>
+                            <div class="feature-desc">Immutable security audit trails</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Intelligence Page -->
+                <div class="page" id="business-intelligence">
+                    <div class="page-header">
+                        <h1 class="page-title">Business Intelligence</h1>
+                        <p class="page-subtitle">Advanced analytics and reporting with AI insights</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Reports Generated</h3>
+                            </div>
+                            <div class="card-value">1,247</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Data Sources</h3>
+                            </div>
+                            <div class="card-value">23</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">AI Insights</h3>
+                            </div>
+                            <div class="card-value">89</div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">BI Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 AI Analytics</div>
+                            <div class="feature-desc">AI-powered business insights and predictions</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📊 Real-time Dashboards</div>
+                            <div class="feature-desc">Live business metrics and KPIs</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📱 Mobile BI</div>
+                            <div class="feature-desc">Mobile access to business intelligence</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🎤 Voice Reporting</div>
+                            <div class="feature-desc">Voice-controlled reporting and analytics</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Finance Page -->
+                <div class="page" id="finance">
+                    <div class="page-header">
+                        <h1 class="page-title">Financial Management</h1>
+                        <p class="page-subtitle">Complete accounting and financial management system</p>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Total Revenue</h3>
+                            </div>
+                            <div class="card-value">$2.1M</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Outstanding Invoices</h3>
+                            </div>
+                            <div class="card-value">$247K</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Cash Flow</h3>
+                            </div>
+                            <div class="card-value">$89K</div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Finance Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 AI Financial Forecasting</div>
+                            <div class="feature-desc">AI-powered financial predictions and analysis</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">💰 Cryptocurrency Payments</div>
+                            <div class="feature-desc">Accept and process cryptocurrency payments</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">📱 Mobile Finance</div>
+                            <div class="feature-desc">Mobile access to financial management</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">🔗 Smart Contracts</div>
+                            <div class="feature-desc">Automated financial contract execution</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <span id="notification-text">Welcome to Clean ERP System!</span>
+    </div>
+
+    <script>
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            notificationText.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Toggle sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        // Show page
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Show selected page
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+            }
+
+            // Update navigation
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+
+            // Find and activate the corresponding nav item
+            const navItem = Array.from(navItems).find(item => 
+                item.getAttribute('onclick') && item.getAttribute('onclick').includes(pageId)
+            );
+            if (navItem) {
+                navItem.classList.add('active');
+            }
+
+            // Show notification
+            const pageNames = {
+                'dashboard': 'Dashboard',
+                'crm': 'CRM Management',
+                'desk': 'Help Desk & Maintenance',
+                'people': 'People & HR',
+                'marketing': 'Marketing Automation',
+                'synk': 'Synk Communication',
+                'quality': 'Quality Management',
+                'projects': 'Project Management',
+                'security': 'Security & Compliance',
+                'business-intelligence': 'Business Intelligence',
+                'finance': 'Financial Management'
+            };
+
+            showNotification(`Navigated to ${pageNames[pageId] || pageId}`);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showNotification('Clean ERP System loaded successfully!');
+        });
+
+        // Mobile sidebar toggle
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Close mobile sidebar when clicking outside
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(e.target) && 
+                !sidebarToggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

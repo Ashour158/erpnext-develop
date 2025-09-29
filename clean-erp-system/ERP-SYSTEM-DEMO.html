@@ -555,83 +555,329 @@
                         <p class="page-subtitle">Manage customers, leads, and sales opportunities with AI-powered insights</p>
                     </div>
 
-                    <div class="dashboard-grid">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Total Leads</h3>
-                            </div>
-                            <div class="card-value">1,247</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Conversion Rate</h3>
-                            </div>
-                            <div class="card-value">23.4%</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Sales Pipeline</h3>
-                            </div>
-                            <div class="card-value">$2.1M</div>
+                    <!-- CRM Submodules Navigation -->
+                    <div style="margin-bottom: 2rem;">
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                            <button class="btn" onclick="showCRMSubmodule('customers')">👥 Customers</button>
+                            <button class="btn" onclick="showCRMSubmodule('leads')">🎯 Leads</button>
+                            <button class="btn" onclick="showCRMSubmodule('opportunities')">💼 Opportunities</button>
+                            <button class="btn" onclick="showCRMSubmodule('contacts')">📞 Contacts</button>
+                            <button class="btn" onclick="showCRMSubmodule('accounts')">🏢 Accounts</button>
+                            <button class="btn" onclick="showCRMSubmodule('pipeline')">📊 Sales Pipeline</button>
+                            <button class="btn" onclick="showCRMSubmodule('activities')">📅 Activities</button>
+                            <button class="btn" onclick="showCRMSubmodule('analytics')">📈 Analytics</button>
                         </div>
                     </div>
 
-                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">CRM Features</h2>
-                    <div class="feature-grid">
-                        <div class="feature-card">
-                            <div class="feature-title">🤖 AI Lead Scoring</div>
-                            <div class="feature-desc">Automatically score and prioritize leads using machine learning</div>
+                    <!-- CRM Dashboard -->
+                    <div id="crm-dashboard" class="crm-submodule">
+                        <div class="dashboard-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Total Customers</h3>
+                                </div>
+                                <div class="card-value">2,847</div>
+                                <p style="color: #27ae60;">↗ +12% from last month</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Active Leads</h3>
+                                </div>
+                                <div class="card-value">1,247</div>
+                                <p style="color: #e74c3c;">↘ -3% from last month</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Sales Pipeline</h3>
+                                </div>
+                                <div class="card-value">$2.1M</div>
+                                <p style="color: #27ae60;">↗ +18% from last month</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Conversion Rate</h3>
+                                </div>
+                                <div class="card-value">23.4%</div>
+                                <p style="color: #f39c12;">→ Same as last month</p>
+                            </div>
                         </div>
-                        <div class="feature-card">
-                            <div class="feature-title">🎤 Voice Commands</div>
-                            <div class="feature-desc">Control CRM with voice commands for hands-free operation</div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-title">📱 Mobile CRM</div>
-                            <div class="feature-desc">Access CRM on mobile devices with offline capabilities</div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-title">📅 Calendar Integration</div>
-                            <div class="feature-desc">Sync with external calendars and schedule meetings</div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-title">📍 Geolocation Tracking</div>
-                            <div class="feature-desc">Track customer locations and territory management</div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-title">🔗 CRM Integrations</div>
-                            <div class="feature-desc">Connect with email, social media, and other platforms</div>
+
+                        <div class="ai-features">
+                            <h3>🤖 AI-Powered CRM Insights</h3>
+                            <p>Your AI assistant has identified 5 high-value leads and 3 opportunities that need immediate attention.</p>
                         </div>
                     </div>
 
-                    <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Recent Customers</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Company</th>
-                                <th>Status</th>
-                                <th>Last Contact</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>John Smith</td>
-                                <td>TechCorp Inc.</td>
-                                <td><span class="status-badge status-active">Active</span></td>
-                                <td>2 days ago</td>
-                                <td><button class="btn">View</button></td>
-                            </tr>
-                            <tr>
-                                <td>Sarah Johnson</td>
-                                <td>Innovate Ltd.</td>
-                                <td><span class="status-badge status-pending">Pending</span></td>
-                                <td>1 week ago</td>
-                                <td><button class="btn">View</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <!-- Customers Submodule -->
+                    <div id="crm-customers" class="crm-submodule" style="display: none;">
+                        <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Customer Management</h2>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>All Customers</h3>
+                            <button class="btn" onclick="openModal('customerModal')">+ Add Customer</button>
+                        </div>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Customer Code</th>
+                                    <th>Name</th>
+                                    <th>Company</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Health Score</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CUST-001</td>
+                                    <td>John Smith</td>
+                                    <td>TechCorp Inc.</td>
+                                    <td>john@techcorp.com</td>
+                                    <td>+1-555-0123</td>
+                                    <td><span class="status-badge status-active">Active</span></td>
+                                    <td>85%</td>
+                                    <td>
+                                        <button class="btn" onclick="editCustomer(1)">Edit</button>
+                                        <button class="btn btn-secondary" onclick="viewCustomer(1)">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>CUST-002</td>
+                                    <td>Sarah Johnson</td>
+                                    <td>Innovate Ltd.</td>
+                                    <td>sarah@innovate.com</td>
+                                    <td>+1-555-0124</td>
+                                    <td><span class="status-badge status-pending">Pending</span></td>
+                                    <td>72%</td>
+                                    <td>
+                                        <button class="btn" onclick="editCustomer(2)">Edit</button>
+                                        <button class="btn btn-secondary" onclick="viewCustomer(2)">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>CUST-003</td>
+                                    <td>Mike Wilson</td>
+                                    <td>Global Solutions</td>
+                                    <td>mike@global.com</td>
+                                    <td>+1-555-0125</td>
+                                    <td><span class="status-badge status-active">Active</span></td>
+                                    <td>91%</td>
+                                    <td>
+                                        <button class="btn" onclick="editCustomer(3)">Edit</button>
+                                        <button class="btn btn-secondary" onclick="viewCustomer(3)">View</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Leads Submodule -->
+                    <div id="crm-leads" class="crm-submodule" style="display: none;">
+                        <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Lead Management</h2>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>All Leads</h3>
+                            <button class="btn" onclick="openModal('leadModal')">+ Add Lead</button>
+                        </div>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Lead Name</th>
+                                    <th>Company</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Source</th>
+                                    <th>AI Score</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Alex Brown</td>
+                                    <td>StartupXYZ</td>
+                                    <td>alex@startupxyz.com</td>
+                                    <td>+1-555-0126</td>
+                                    <td>Website</td>
+                                    <td>92%</td>
+                                    <td><span class="status-badge status-active">Hot Lead</span></td>
+                                    <td>
+                                        <button class="btn" onclick="qualifyLead(1)">Qualify</button>
+                                        <button class="btn btn-secondary" onclick="viewLead(1)">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Lisa Davis</td>
+                                    <td>Enterprise Corp</td>
+                                    <td>lisa@enterprise.com</td>
+                                    <td>+1-555-0127</td>
+                                    <td>Referral</td>
+                                    <td>78%</td>
+                                    <td><span class="status-badge status-pending">Warm Lead</span></td>
+                                    <td>
+                                        <button class="btn" onclick="qualifyLead(2)">Qualify</button>
+                                        <button class="btn btn-secondary" onclick="viewLead(2)">View</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Opportunities Submodule -->
+                    <div id="crm-opportunities" class="crm-submodule" style="display: none;">
+                        <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Opportunity Management</h2>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>Sales Opportunities</h3>
+                            <button class="btn" onclick="openModal('opportunityModal')">+ Add Opportunity</button>
+                        </div>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Opportunity Name</th>
+                                    <th>Customer</th>
+                                    <th>Amount</th>
+                                    <th>Stage</th>
+                                    <th>Probability</th>
+                                    <th>Close Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Enterprise Software License</td>
+                                    <td>TechCorp Inc.</td>
+                                    <td>$125,000</td>
+                                    <td><span class="status-badge status-active">Proposal</span></td>
+                                    <td>75%</td>
+                                    <td>2024-02-15</td>
+                                    <td>
+                                        <button class="btn" onclick="updateOpportunity(1)">Update</button>
+                                        <button class="btn btn-secondary" onclick="viewOpportunity(1)">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Cloud Migration Project</td>
+                                    <td>Innovate Ltd.</td>
+                                    <td>$85,000</td>
+                                    <td><span class="status-badge status-pending">Negotiation</span></td>
+                                    <td>60%</td>
+                                    <td>2024-03-01</td>
+                                    <td>
+                                        <button class="btn" onclick="updateOpportunity(2)">Update</button>
+                                        <button class="btn btn-secondary" onclick="viewOpportunity(2)">View</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Sales Pipeline Submodule -->
+                    <div id="crm-pipeline" class="crm-submodule" style="display: none;">
+                        <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Sales Pipeline</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                            <div class="card">
+                                <h4>Prospecting</h4>
+                                <div class="card-value">23</div>
+                                <p>$450K</p>
+                            </div>
+                            <div class="card">
+                                <h4>Qualification</h4>
+                                <div class="card-value">18</div>
+                                <p>$380K</p>
+                            </div>
+                            <div class="card">
+                                <h4>Proposal</h4>
+                                <div class="card-value">12</div>
+                                <p>$320K</p>
+                            </div>
+                            <div class="card">
+                                <h4>Negotiation</h4>
+                                <div class="card-value">8</div>
+                                <p>$180K</p>
+                            </div>
+                            <div class="card">
+                                <h4>Closed Won</h4>
+                                <div class="card-value">5</div>
+                                <p>$95K</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activities Submodule -->
+                    <div id="crm-activities" class="crm-submodule" style="display: none;">
+                        <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Activity Management</h2>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>Recent Activities</h3>
+                            <button class="btn" onclick="openModal('activityModal')">+ Add Activity</button>
+                        </div>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Subject</th>
+                                    <th>Customer</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>📞 Call</td>
+                                    <td>Follow-up on proposal</td>
+                                    <td>TechCorp Inc.</td>
+                                    <td>2024-01-15</td>
+                                    <td><span class="status-badge status-completed">Completed</span></td>
+                                    <td>
+                                        <button class="btn" onclick="editActivity(1)">Edit</button>
+                                        <button class="btn btn-secondary" onclick="viewActivity(1)">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>📧 Email</td>
+                                    <td>Product demo request</td>
+                                    <td>Innovate Ltd.</td>
+                                    <td>2024-01-14</td>
+                                    <td><span class="status-badge status-pending">Pending</span></td>
+                                    <td>
+                                        <button class="btn" onclick="editActivity(2)">Edit</button>
+                                        <button class="btn btn-secondary" onclick="viewActivity(2)">View</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Analytics Submodule -->
+                    <div id="crm-analytics" class="crm-submodule" style="display: none;">
+                        <h2 style="margin: 2rem 0 1rem 0; color: #2c3e50;">CRM Analytics</h2>
+                        <div class="dashboard-grid">
+                            <div class="card">
+                                <h3>Lead Conversion Rate</h3>
+                                <div class="card-value">23.4%</div>
+                                <p>↗ +2.1% from last month</p>
+                            </div>
+                            <div class="card">
+                                <h3>Average Deal Size</h3>
+                                <div class="card-value">$45,200</div>
+                                <p>↗ +8.3% from last month</p>
+                            </div>
+                            <div class="card">
+                                <h3>Sales Cycle Length</h3>
+                                <div class="card-value">45 days</div>
+                                <p>↘ -5 days from last month</p>
+                            </div>
+                            <div class="card">
+                                <h3>Customer Satisfaction</h3>
+                                <div class="card-value">4.7/5</div>
+                                <p>↗ +0.2 from last month</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Desk Page -->
@@ -1157,6 +1403,116 @@
             };
 
             showNotification(`Navigated to ${pageNames[pageId] || pageId}`);
+        }
+
+        // CRM Submodule Functions
+        function showCRMSubmodule(submodule) {
+            // Hide all CRM submodules
+            const submodules = document.querySelectorAll('.crm-submodule');
+            submodules.forEach(sub => sub.style.display = 'none');
+
+            // Show selected submodule
+            const selectedSubmodule = document.getElementById(`crm-${submodule}`);
+            if (selectedSubmodule) {
+                selectedSubmodule.style.display = 'block';
+            }
+
+            showNotification(`CRM: ${submodule.charAt(0).toUpperCase() + submodule.slice(1)}`);
+        }
+
+        // CRM Action Functions
+        function editCustomer(id) {
+            showNotification(`Editing Customer #${id}`);
+            // Here you would open a modal or form for editing
+        }
+
+        function viewCustomer(id) {
+            showNotification(`Viewing Customer #${id}`);
+            // Here you would show customer details
+        }
+
+        function qualifyLead(id) {
+            showNotification(`Qualifying Lead #${id}`);
+            // Here you would convert lead to opportunity
+        }
+
+        function viewLead(id) {
+            showNotification(`Viewing Lead #${id}`);
+            // Here you would show lead details
+        }
+
+        function updateOpportunity(id) {
+            showNotification(`Updating Opportunity #${id}`);
+            // Here you would update opportunity stage
+        }
+
+        function viewOpportunity(id) {
+            showNotification(`Viewing Opportunity #${id}`);
+            // Here you would show opportunity details
+        }
+
+        function editActivity(id) {
+            showNotification(`Editing Activity #${id}`);
+            // Here you would edit activity
+        }
+
+        function viewActivity(id) {
+            showNotification(`Viewing Activity #${id}`);
+            // Here you would show activity details
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            showNotification(`Opening ${modalId}`);
+            // Here you would open the appropriate modal
+        }
+
+        // Desk Submodule Functions
+        function showDeskSubmodule(submodule) {
+            // Hide all Desk submodules
+            const submodules = document.querySelectorAll('.desk-submodule');
+            submodules.forEach(sub => sub.style.display = 'none');
+
+            // Show selected submodule
+            const selectedSubmodule = document.getElementById(`desk-${submodule}`);
+            if (selectedSubmodule) {
+                selectedSubmodule.style.display = 'block';
+            }
+
+            showNotification(`Desk: ${submodule.charAt(0).toUpperCase() + submodule.slice(1)}`);
+        }
+
+        // Desk Action Functions
+        function updateTicket(id) {
+            showNotification(`Updating Ticket #${id}`);
+        }
+
+        function viewTicket(id) {
+            showNotification(`Viewing Ticket #${id}`);
+        }
+
+        function updateMaintenance(id) {
+            showNotification(`Updating Maintenance Request #${id}`);
+        }
+
+        function viewMaintenance(id) {
+            showNotification(`Viewing Maintenance Request #${id}`);
+        }
+
+        function editAsset(id) {
+            showNotification(`Editing Asset #${id}`);
+        }
+
+        function viewAsset(id) {
+            showNotification(`Viewing Asset #${id}`);
+        }
+
+        function trackTechnician(id) {
+            showNotification(`Tracking Technician #${id}`);
+        }
+
+        function contactTechnician(id) {
+            showNotification(`Contacting Technician #${id}`);
         }
 
         // Initialize

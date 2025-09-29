@@ -1515,6 +1515,58 @@
             showNotification(`Contacting Technician #${id}`);
         }
 
+        // People Submodule Functions
+        function showPeopleSubmodule(submodule) {
+            // Hide all People submodules
+            const submodules = document.querySelectorAll('.people-submodule');
+            submodules.forEach(sub => sub.style.display = 'none');
+
+            // Show selected submodule
+            const selectedSubmodule = document.getElementById(`people-${submodule}`);
+            if (selectedSubmodule) {
+                selectedSubmodule.style.display = 'block';
+            }
+
+            showNotification(`People: ${submodule.charAt(0).toUpperCase() + submodule.slice(1)}`);
+        }
+
+        // People Action Functions
+        function editEmployee(id) {
+            showNotification(`Editing Employee #${id}`);
+        }
+
+        function viewEmployee(id) {
+            showNotification(`Viewing Employee #${id}`);
+        }
+
+        function editAttendance(id) {
+            showNotification(`Editing Attendance #${id}`);
+        }
+
+        function viewAttendance(id) {
+            showNotification(`Viewing Attendance #${id}`);
+        }
+
+        function approveLeave(id) {
+            showNotification(`Approving Leave Request #${id}`);
+        }
+
+        function rejectLeave(id) {
+            showNotification(`Rejecting Leave Request #${id}`);
+        }
+
+        function viewLeave(id) {
+            showNotification(`Viewing Leave Request #${id}`);
+        }
+
+        function viewPayroll(id) {
+            showNotification(`Viewing Payroll #${id}`);
+        }
+
+        function viewPosition(id) {
+            showNotification(`Viewing Position #${id}`);
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             showNotification('Clean ERP System loaded successfully!');

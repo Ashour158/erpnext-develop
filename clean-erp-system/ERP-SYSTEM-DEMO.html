@@ -555,24 +555,46 @@
                         <p class="page-subtitle">Manage customers, leads, and sales opportunities with AI-powered insights</p>
                     </div>
 
-                    <!-- CRM Submodules Navigation -->
-                    <div style="margin-bottom: 2rem;">
-                        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                            <button class="btn" onclick="showCRMSubmodule('contacts')">📞 Contacts</button>
-                            <button class="btn" onclick="showCRMSubmodule('accounts')">🏢 Accounts</button>
-                            <button class="btn" onclick="showCRMSubmodule('leads')">🎯 Leads</button>
-                            <button class="btn" onclick="showCRMSubmodule('opportunities')">💼 Opportunities</button>
-                            <button class="btn" onclick="showCRMSubmodule('pipeline')">📊 Sales Pipeline</button>
-                            <button class="btn" onclick="showCRMSubmodule('activities')">📅 Activities</button>
-                            <button class="btn" onclick="showCRMSubmodule('analytics')">📈 Analytics</button>
-                            <button class="btn" onclick="showCRMSubmodule('settings')">⚙️ Settings</button>
-                        </div>
-                        <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
-                            <button class="btn" onclick="importData('crm')" style="background: #27ae60;">📥 Import</button>
-                            <button class="btn" onclick="exportData('crm')" style="background: #3498db;">📤 Export</button>
-                            <button class="btn" onclick="openFullPage('crm')" style="background: #9b59b6;">🔍 Full Page</button>
-                        </div>
-                    </div>
+            <!-- CRM Submodules Navigation - All 18 Core Submodules -->
+            <div style="margin-bottom: 2rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; margin-bottom: 1rem;">
+                    <!-- Core CRM -->
+                    <button class="btn" onclick="showCRMSubmodule('leads')" style="background: #e74c3c;">📞 Leads</button>
+                    <button class="btn" onclick="showCRMSubmodule('accounts')" style="background: #3498db;">🏢 Accounts</button>
+                    <button class="btn" onclick="showCRMSubmodule('contacts')" style="background: #27ae60;">👥 Contacts</button>
+                    <button class="btn" onclick="showCRMSubmodule('deals')" style="background: #f39c12;">💼 Deals</button>
+                    
+                    <!-- Forecasting -->
+                    <button class="btn" onclick="showCRMSubmodule('sales-forecasts')" style="background: #9b59b6;">📊 Sales Forecasting</button>
+                    <button class="btn" onclick="showCRMSubmodule('territory-forecasts')" style="background: #1abc9c;">🌍 Territory Forecasting</button>
+                    
+                    <!-- Automation -->
+                    <button class="btn" onclick="showCRMSubmodule('macros')" style="background: #e67e22;">⚡ Macros</button>
+                    <button class="btn" onclick="showCRMSubmodule('feeds')" style="background: #34495e;">📰 Feeds</button>
+                    <button class="btn" onclick="showCRMSubmodule('sales-signals')" style="background: #8e44ad;">🎯 Sales Signals</button>
+                    
+                    <!-- Documents & Activities -->
+                    <button class="btn" onclick="showCRMSubmodule('documents')" style="background: #16a085;">📚 Documents</button>
+                    <button class="btn" onclick="showCRMSubmodule('activities')" style="background: #2ecc71;">📅 Activities</button>
+                    <button class="btn" onclick="showCRMSubmodule('reminders')" style="background: #f1c40f;">🔔 Reminders</button>
+                    
+                    <!-- Advanced Features -->
+                    <button class="btn" onclick="showCRMSubmodule('recurring-activities')" style="background: #e91e63;">🔄 Recurring Activities</button>
+                    <button class="btn" onclick="showCRMSubmodule('calendar-bookings')" style="background: #3f51b5;">📅 Calendar Booking</button>
+                    <button class="btn" onclick="showCRMSubmodule('currencies')" style="background: #ff9800;">💱 Currencies</button>
+                    <button class="btn" onclick="showCRMSubmodule('social-integrations')" style="background: #2196f3;">📱 Social Integration</button>
+                    
+                    <!-- Scoring -->
+                    <button class="btn" onclick="showCRMSubmodule('scoring-rules')" style="background: #4caf50;">📊 Scoring Rules</button>
+                    <button class="btn" onclick="showCRMSubmodule('multiple-scoring-rules')" style="background: #795548;">🎯 Multiple Scoring</button>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                    <button class="btn" onclick="importData('crm')" style="background: #27ae60;">📥 Import</button>
+                    <button class="btn" onclick="exportData('crm')" style="background: #3498db;">📤 Export</button>
+                    <button class="btn" onclick="openFullPage('crm')" style="background: #9b59b6;">🔍 Full Page</button>
+                    <button class="btn" onclick="showCRMDashboard()" style="background: #e74c3c;">📊 Dashboard</button>
+                </div>
+            </div>
 
                     <!-- CRM Dashboard -->
                     <div id="crm-dashboard" class="crm-submodule">
